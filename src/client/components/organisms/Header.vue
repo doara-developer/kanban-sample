@@ -1,7 +1,7 @@
 <template>
-    <div class="header">
+    <header class="header">
         <PageTitle>Kanban Sample</PageTitle>
-    </div>
+    </header>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from "vue";
