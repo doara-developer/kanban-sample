@@ -1,15 +1,13 @@
 <template>
-    <div>
-        <KanbanPage />
-    </div>
+    <KanbanArea>Kanban1</KanbanArea>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import KanbanPage from "@client/components/pages/KanbanPage.vue";
+import KanbanArea from "@client/components/molecules/KanbanArea.vue";
 
 export default defineComponent({
     components: {
-        KanbanPage,
+        KanbanArea,
     },
 });
 </script>
