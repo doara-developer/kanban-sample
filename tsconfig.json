@@ -7,18 +7,18 @@
         "esModuleInterop": true,
         "baseUrl": "src",
         "typeRoots": [
-            "node_modules/@types"
+            "node_modules/@types",
         ],
         "paths": {
             "@client/*": ["./client/*"],
             "@server/*": ["./server/*"],
-            "@common/*": ["./common/*"]
+            "@common/*": ["./common/*"],
         },
         "moduleResolution": "node",
-        "types": ["jest"]
+        "types": ["jest"],
     },
     "include": [
         "src/**/*",
-        "__test__/**/*.ts"
+        "__test__/**/*.ts",
     ]
 }
