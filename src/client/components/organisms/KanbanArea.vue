@@ -8,20 +8,32 @@
             <Kanban v-for="item in data" :key="item.id">
                 <template #title>{{ item.title }}</template>
             </Kanban>
-            <KanbanPlusButton />
+            <KanbanPlusButton
+                v-if="state.isProgress === false"
+                @click="changeStatus(true)"
+            />
+            <KanbanEditArea
+                v-if="state.isProgress === true"
+                @cancel="changeStatus(false)"
+                @add="addData"
+            />
         </div>
     </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, PropType } from "vue";
+import { defineComponent, ref, PropType, reactive } from "vue";
 import Kanban from "@client/components/molecules/Kanban.vue";
 import KanbanAreaTitle from "@client/components/atoms/KanbanAreaTitle.vue";
 import KanbanAreaNumber from "@client/components/atoms/KanbanAreaNumber.vue";
 import KanbanPlusButton from "@client/components/atoms/KanbanPlusButton.vue";
+import KanbanEditArea from "@client/components/atoms/KanbanEditArea.vue";
 
 export type KanbanData = {
     id: string;
     title: string;
+};
+type KanbanAreaState = {
+    isProgress: boolean;
 };
 export default defineComponent({
     components: {
@@ -29,12 +41,35 @@ export default defineComponent({
         KanbanAreaTitle,
         KanbanAreaNumber,
         KanbanPlusButton,
+        KanbanEditArea,
     },
     props: {
+        itemId: {
+            type: String,
+            default: "",
+        },
         data: {
             type: Array as PropType<KanbanData[]>,
             default: [],
         },
+    },
+    emits: ["new"],
+    setup(props, context) {
+        const state = reactive<KanbanAreaState>({
+            isProgress: false,
+        });
+        const changeStatus = (status: boolean) => {
+            state.isProgress = status;
+        };
+        const addData = (value: string) => {
+            context.emit("new", { id: props.itemId, value: value });
+            changeStatus(false);
+        };
+        return {
+            state,
+            changeStatus,
+            addData,
+        };
     },
 });
 </script>

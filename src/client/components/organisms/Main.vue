@@ -1,6 +1,12 @@
 <template>
     <div class="main">
-        <KanbanArea v-for="item in state" :key="item.id" :data="item.data">
+        <KanbanArea
+            v-for="item in state"
+            :key="item.id"
+            :data="item.data"
+            :item-id="item.id"
+            @new="addItem"
+        >
             {{ item.title }}
         </KanbanArea>
     </div>
@@ -15,6 +21,10 @@ type KabanAreaData = {
     id: string;
     title: string;
     data: KanbanData[];
+};
+type AddItemArg = {
+    id: string;
+    value: string;
 };
 export default defineComponent({
     components: {
@@ -47,8 +57,16 @@ export default defineComponent({
                 data: [],
             },
         ]);
+        const addItem = ({ id, value }: AddItemArg) => {
+            const item = state.find((item) => item.id === id);
+            item?.data.push({
+                id: String(item.data.length + 1),
+                title: value,
+            });
+        };
         return {
             state,
+            addItem,
         };
     },
 });
