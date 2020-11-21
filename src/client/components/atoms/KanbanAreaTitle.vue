@@ -1,5 +1,5 @@
 <template>
-    <div class="kanban"><slot></slot></div>
+    <div class="kanban-area-title"><slot></slot></div>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from "vue";
@@ -7,12 +7,8 @@ import { defineComponent, ref } from "vue";
 export default defineComponent({});
 </script>
 <style lang="scss" scoped>
-.kanban {
-    width: 100%;
-    background-color: white;
-    cursor: pointer;
-    margin-bottom: 5px;
-    border-radius: 5px;
+.kanban-area-title {
+    font-size: 1.2rem;
     padding: 5px;
 }
 </style>

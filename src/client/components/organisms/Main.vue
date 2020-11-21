@@ -9,7 +9,7 @@
 import { defineComponent, reactive, ref } from "vue";
 import KanbanArea, {
     KanbanData,
-} from "@client/components/molecules/KanbanArea.vue";
+} from "@client/components/organisms/KanbanArea.vue";
 
 type KabanAreaData = {
     id: string;
