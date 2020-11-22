@@ -5,7 +5,11 @@
             <KanbanAreaNumber>{{ data.length }}</KanbanAreaNumber>
         </div>
         <div class="kanban-area-content">
-            <Kanban v-for="item in data" :key="item.id">
+            <Kanban
+                v-for="item in data"
+                :key="item.id"
+                @delete="deleteItem(item.id)"
+            >
                 <template #title>{{ item.title }}</template>
             </Kanban>
             <KanbanPlusButton
@@ -53,7 +57,7 @@ export default defineComponent({
             default: [],
         },
     },
-    emits: ["new"],
+    emits: ["new", "delete-item"],
     setup(props, context) {
         const state = reactive<KanbanAreaState>({
             isProgress: false,
@@ -65,10 +69,14 @@ export default defineComponent({
             context.emit("new", { id: props.itemId, value: value });
             changeStatus(false);
         };
+        const deleteItem = (id: string) => {
+            context.emit("delete-item", { id: id, areaId: props.itemId });
+        };
         return {
             state,
             changeStatus,
             addData,
+            deleteItem,
         };
     },
 });

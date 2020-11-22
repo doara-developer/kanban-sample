@@ -1,18 +1,32 @@
 <template>
     <div class="kanban">
         <KanbanTitle><slot name="title"></slot></KanbanTitle>
+        <KanbanDeleteButton @click="deleteItem" />
     </div>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import KanbanTitle from "@client/components/atoms/KanbanTitle.vue";
+import KanbanDeleteButton from "@client/components/atoms/KanbanDeleteButton.vue";
 
 export default defineComponent({
-    components: { KanbanTitle },
+    components: { KanbanTitle, KanbanDeleteButton },
+    emits: ["delete"],
+    setup(props, context) {
+        const deleteItem = () => {
+            if (confirm("削除しますか？")) {
+                context.emit("delete");
+            }
+        };
+        return {
+            deleteItem,
+        };
+    },
 });
 </script>
 <style lang="scss" scoped>
 .kanban {
+    display: flex;
     width: 100%;
     background-color: white;
     cursor: pointer;

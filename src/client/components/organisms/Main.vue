@@ -6,6 +6,7 @@
             :data="item.data"
             :item-id="item.id"
             @new="addItem"
+            @deleteItem="deleteItem"
         >
             {{ item.title }}
         </KanbanArea>
@@ -25,6 +26,10 @@ type KabanAreaData = {
 type AddItemArg = {
     id: string;
     value: string;
+};
+type DeleteItemArg = {
+    id: string;
+    areaId: string;
 };
 export default defineComponent({
     components: {
@@ -64,9 +69,16 @@ export default defineComponent({
                 title: value,
             });
         };
+        const deleteItem = ({ id, areaId }: DeleteItemArg) => {
+            const itemList = state.find((item) => item.id === areaId);
+            if (itemList?.data !== undefined) {
+                itemList.data = itemList?.data.filter((item) => item.id !== id);
+            }
+        };
         return {
             state,
             addItem,
+            deleteItem,
         };
     },
 });
